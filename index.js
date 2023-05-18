@@ -30,9 +30,17 @@ async function run() {
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log(`animals-toyhub DATABASE Connected`.cyan);
+        // database
+        const allToys = client.db('alltoys').collection('alltoys');
 
-
-
+        app.post('/alltoys', async (req, res) => {
+            const toyData = req.body;
+            const result = await allToys.insertOne(toyData);
+            res.status(200).json({
+                status: "success",
+                data: result
+            })
+        })
 
     } finally {
 
@@ -46,10 +54,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 })
 
-app.post('/alltoys', (req, res) => {
-    const toyData = req.body;
-    console.log(toyData)
-})
+
 
 app.listen(port, () => {
     console.log(`Server Running On PORT ${port}`.yellow);
