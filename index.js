@@ -33,6 +33,7 @@ async function run() {
         // database
         const allToys = client.db('alltoys').collection('alltoys');
 
+        // add a toy 
         app.post('/alltoys', async (req, res) => {
             const toyData = req.body;
             const result = await allToys.insertOne(toyData);
@@ -40,6 +41,17 @@ async function run() {
                 status: "success",
                 data: result
             })
+        })
+
+        // get all toys 
+        app.get('/alltoys', async (req, res) => {
+            let query = {};
+            const email = req.query.email;
+            if (email) {
+                query = { sellerEmail: email }
+            }
+            const result = await allToys.find(query).toArray();
+            res.send(result)
         })
 
     } finally {
