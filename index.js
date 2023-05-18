@@ -53,6 +53,13 @@ async function run() {
             const result = await allToys.find(query).toArray();
             res.send(result)
         })
+        // get a single toy
+        app.get('/alltoys/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await allToys.find(query).toArray();
+            res.send(result)
+        })
 
         // delete a toy 
         app.delete('/alltoys/delete/:id', async (req, res) => {
