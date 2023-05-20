@@ -50,7 +50,17 @@ async function run() {
             if (email) {
                 query = { sellerEmail: email }
             }
-            const result = await allToys.find(query).toArray();
+            const result = await allToys.find(query).limit(20).toArray();
+            res.send(result)
+        })
+        // get all toys by ascending sort
+        app.get('/ascendingsort', async (req, res) => {
+            const result = await allToys.find({}).sort({ price: 1 }).toArray();
+            res.send(result)
+        })
+        // get all toys by ascending sort
+        app.get('/dscendingsor', async (req, res) => {
+            const result = await allToys.find({}).sort({ price: -1 }).toArray();
             res.send(result)
         })
 
