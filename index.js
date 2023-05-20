@@ -55,12 +55,14 @@ async function run() {
         })
         // get all toys by ascending sort
         app.get('/ascendingsort', async (req, res) => {
-            const result = await allToys.find({}).sort({ price: 1 }).toArray();
+            const email = req.query.email;
+            const result = await allToys.find({ sellerEmail: email }).sort({ price: 1 }).toArray();
             res.send(result)
         })
-        // get all toys by ascending sort
-        app.get('/dscendingsor', async (req, res) => {
-            const result = await allToys.find({}).sort({ price: -1 }).toArray();
+        // get all toys by dscending sort
+        app.get('/dscendingsort', async (req, res) => {
+            const email = req.query.email;
+            const result = await allToys.find({ sellerEmail: email }).sort({ price: -1 }).toArray();
             res.send(result)
         })
 
